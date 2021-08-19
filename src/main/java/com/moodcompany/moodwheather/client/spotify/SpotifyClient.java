@@ -65,7 +65,7 @@ public class SpotifyClient {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBearerAuth("BQBH7isY4MQ1nwz2G7WjVD_KPAi14RNIeZOePT8wG2fJ_mHNULzZu-Z0Ka2tQY8A-urTY_SSKzBSuQ0M-NVlVA0GxhEKP97LRa5JcNKqWeiK32vR1iHxUTw-1OS6v7onO4oYSWuC0UitTKaJhz3XCjUhvFW4e7Ty9jaVy22_Vgm6xA");
+		headers.setBearerAuth("BQBs1C3GoqUtthqBFJQw9L7_Lz8iQCF_VLaJNnRS6EJLwfSpDF_aAAyr-hZm3q_2Vxm_UPJ0Q5BozFmCl8tSQsdOyjCSw3R2tSJM5bkD9x9cq_wGUlXvqgQaT_CVbgcCxTWaw2RFAtpWzAGkt04ehQgN3VxRz4qtttc3wWwA2Xi2xw");
 		HttpEntity<String> entity = new HttpEntity<>("", headers);
 		
 		Response tracks= restTemplate.exchange(builder.toUriString(),

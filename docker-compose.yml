@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+    muscimoodwheatherdbhost:
+        image: postgres:latest
+        networks:
+         - network-backend
+        container_name: muscimoodwheatherdbhost
+        volumes:
+          - postgres-data:/home/docker/deploy
+        expose:
+          - 5444
+        ports:
+          - "5444:5432"
+        environment:
+             - POSTGRES_PASSWORD=password
+             - POSTGRES_USER=user
+             - POSTGRES_DB=muscimoodwheatherdb
+        restart: unless-stopped
+    muscimoodwheatherbackend:
+        image: springboot
+        container_name: muscimoodwheatherbackend
+        environment:
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://muscimoodwheatherdbhost:5432/muscimoodwheatherdb
+        build:
+            context: .
+            dockerfile: ./Dockerfile.spring
+        expose:
+            - 8088
+        ports:
+          - "8088:8080"
+        depends_on:
+          - muscimoodwheatherdbhost
+        links:
+          - muscimoodwheatherdbhost
+        networks:
+          - network-backend
+        restart: unless-stopped
+  
+networks: 
+    network-backend:
+        driver: bridge
+       
+volumes:
+    postgres-data:
+  
