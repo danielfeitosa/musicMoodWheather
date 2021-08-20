@@ -2,21 +2,28 @@ package com.moodcompany.moodwheather.dto;
 
 import java.util.List;
 
+import com.moodcompany.moodwheather.domain.Genre;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Builder
-public class TrackDto {
+public class TrackWheatherDto {
+	
+	
 
-	private String id;
+	private Long id;
 
-	private List<ArtistDto> artists;
+	private String city;
+	private Double temperature;
 
-	private String name;
+	private List<TrackDto> tracks;
+
+	private Genre genre;
 
 }

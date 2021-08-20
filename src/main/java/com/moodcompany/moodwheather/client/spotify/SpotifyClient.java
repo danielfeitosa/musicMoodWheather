@@ -1,87 +1,97 @@
 package com.moodcompany.moodwheather.client.spotify;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.moodcompany.moodwheather.domain.Genre;
 import com.moodcompany.moodwheather.domain.Track;
+import com.moodcompany.moodwheather.security.SpotifyToken;
+
 @Component
 public class SpotifyClient {
 
-	public final String OPEN_WHEATHER_API_ID = "6801fe9e74c3fd9d5a5b0ea6b668d7af";
-
 	
-   
+	@Value("${prop.spotify.cliente_id}")
+	private String client_id;
+	@Value("${prop.spotify.secret_id}")
+	private String secret_id;
+	
+	@Value("${prop.spotify.redirect_uri}")
+	private String redirect_uri;
+	
+
+
 	private final RestTemplate restTemplate;
+
+	private SpotifyToken spotifyToken;
 
 	@Autowired
 	public SpotifyClient() {
 		super();
 		this.restTemplate = new RestTemplate();
 	}
+
 	
-	
-	public void authorize() {
-		String authorizeUrl="https://accounts.spotify.com/authorize";
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(authorizeUrl) 
-				.queryParam("client_id", "4fda7f4932bf4c068141a1e526502f7e")
-				.queryParam("response_type", "code")
-				.queryParam("scope", "user-read-private user-read-email")
-				.queryParam("show_dialog", true)
-		        .queryParam("redirect_uri", "http://127.0.0.1:8080/api/spotify/callback");
-		        
-		ResponseEntity<String> response = restTemplate.exchange(builder.toUriString(),HttpMethod.GET,null, String.class);
-		System.out.println(response.toString());
-		System.out.println(builder.toUriString());
-	
+
+
+	public void authorization(String code) {
+		if (spotifyToken == null) {
+			String apiTokenURL = "https://accounts.spotify.com/api/token";
+			String grantType = "authorization_code";
+			String basicAuth = client_id + ":" + secret_id;
+			HttpHeaders headers = new HttpHeaders();
+			String encoding = Base64.getEncoder().encodeToString(basicAuth.getBytes());
+			headers.setBasicAuth(encoding);
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			MultiValueMap<String, String> bodyParamMap = new LinkedMultiValueMap<>();
+			bodyParamMap.add("grant_type", grantType);
+			bodyParamMap.add("code", code);
+			bodyParamMap.add("redirect_uri", redirect_uri);
+
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(bodyParamMap, headers);
+			spotifyToken = restTemplate.postForEntity(apiTokenURL, entity, SpotifyToken.class).getBody();
+			
+			
+			
+		}
+		
+		
+
 	}
-	
-	public void authorization(String code ) {
-		
-		String apiTokenURL="https://accounts.spotify.com/api/token";
-		
-		
-		
-	}
-	
-	
+
 	public List<Track> getTracksForGender(Genre genre) {
-		String url="https://api.spotify.com/v1/recommendations";
-		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-				.queryParam("limit", 10)
-				.queryParam("market", "BR")
-				.queryParam("seed_genres", genre.name().toLowerCase());
-		
+		String url = "https://api.spotify.com/v1/recommendations";
+		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url).queryParam("limit", 10)
+				.queryParam("market", "BR").queryParam("seed_genres", genre.name().toLowerCase());
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setBearerAuth("BQBs1C3GoqUtthqBFJQw9L7_Lz8iQCF_VLaJNnRS6EJLwfSpDF_aAAyr-hZm3q_2Vxm_UPJ0Q5BozFmCl8tSQsdOyjCSw3R2tSJM5bkD9x9cq_wGUlXvqgQaT_CVbgcCxTWaw2RFAtpWzAGkt04ehQgN3VxRz4qtttc3wWwA2Xi2xw");
+		headers.setBearerAuth(
+				spotifyToken.getAccess_token());
 		HttpEntity<String> entity = new HttpEntity<>("", headers);
-		
-		Response tracks= restTemplate.exchange(builder.toUriString(),
-				HttpMethod.GET,
-				entity, Response.class).getBody(); 
-		
-		System.out.println(restTemplate.exchange(builder.toUriString(),
-				HttpMethod.GET,
-				entity, String.class).getBody()); 
-		
-		System.out.println(tracks.getTracks());
+
+		Response tracks = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Response.class)
+				.getBody();
+
 		return tracks.getTracks();
 	}
-	
-	
-	
-	
 
 }

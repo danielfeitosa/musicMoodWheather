@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ArtitstDto {
+public class ArtistDto {
 	
 	private String name;
 	

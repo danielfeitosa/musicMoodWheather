@@ -21,12 +21,12 @@ class TrackRestControllerTest {
 
 	@Test
 	void test() throws Exception {
-		String baseUrl = "/api/track/Recife";
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(baseUrl))
-				.andExpect(MockMvcResultMatchers.jsonPath("$.city").isNotEmpty()).andReturn();
-		logger.info(result.getRequest().getMethod() + " " + result.getRequest().getRequestURI() + " STATUS ("
-				+ result.getResponse().getStatus() + ")");
-		System.out.println(result.getResponse().getContentAsString());
+//		String baseUrl = "/api/track/Recife";
+//		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(baseUrl))
+//				.andExpect(MockMvcResultMatchers.jsonPath("$.city").isNotEmpty()).andReturn();
+//		logger.info(result.getRequest().getMethod() + " " + result.getRequest().getRequestURI() + " STATUS ("
+//				+ result.getResponse().getStatus() + ")");
+//		System.out.println(result.getResponse().getContentAsString());
 	}
 
 }

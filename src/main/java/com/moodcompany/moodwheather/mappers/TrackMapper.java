@@ -7,8 +7,8 @@ import com.moodcompany.moodwheather.dto.TrackDto;
 @Mapper
 public interface TrackMapper {
 	
-	TrackDto trackToTrackDto(Track track);
+	TrackDto entityToDto(Track track);
 	
-	Track trackDtoToTrack(TrackDto dto);
+	Track dtoToEntity(TrackDto dto);
 
 }

@@ -3,26 +3,32 @@ package com.moodcompany.moodwheather.domain;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-@Builder
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 @Entity
-public class TrackWheather {
+@AllArgsConstructor
+@Builder
+public class TrackWheather extends BaseEntity {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String city;
 	private Double temperature;
 	@OneToMany
+	@Cascade(CascadeType.ALL)
 	private List<Track> tracks;
 
 	private Genre genre;
