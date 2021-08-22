@@ -6,7 +6,7 @@
  
  #### Variáveis de ambiente - Antes de executar o docker-compose 
 
-- Edite o deploy.sh com os Ids de cliente do Spotify e a chave da API OpenWeatherMaps:
+- Edite o deploy.sh (que está na raiz do projeto)com os Ids de cliente do Spotify e a chave da API OpenWeatherMaps:
 
  - CLIENT_SPOTIFY_ID
  - SECRET_SPOTIFY_ID
