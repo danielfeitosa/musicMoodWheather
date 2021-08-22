@@ -1,5 +1,5 @@
-export CLIENT_SPOTIFY_ID=4fda7f4932bf4c068141a1e526502f7e
-export SECRET_SPOTIFY_ID=8c5b88ea1fed465badebafbfa4dfc5de
-export OPEN_WHEATHER_ID=6801fe9e74c3fd9d5a5b0ea6b668d7af
+export CLIENT_SPOTIFY_ID= {seu client_id do spptify}
+export SECRET_SPOTIFY_ID={seu secret_id do spptify}
+export OPEN_WHEATHER_ID={seu id do OPEN_WHEATHER}
 
 docker-compose up --build
