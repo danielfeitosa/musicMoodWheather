@@ -9,11 +9,5 @@
 
 - export CLIENT_ID= cliente_id configurado no seu spotify
 - export SECRET_ID= secret_id configurado no seu spotify
-- export REDIREC_URI=http://localhost:8088/api/callback/authorize
-
-
-
-
-- Adcionar a url  http://localhost:8088/api/callback/authorize dashboard do spotify.
 
 - Executar o cmd docker-compose up --build
