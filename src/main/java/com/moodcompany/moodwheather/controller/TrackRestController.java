@@ -26,7 +26,7 @@ public class TrackRestController {
 	}
 
 	@GetMapping("/{city}")
-	public TrackWheatherDto buscarListaPorCidade(@PathVariable("city") String city) {
+	public TrackWheatherDto listTracksByCity(@PathVariable("city") String city) {
 
 		return mapper.entityToDto(service.getTrackByCityWheather(city)) ;
 

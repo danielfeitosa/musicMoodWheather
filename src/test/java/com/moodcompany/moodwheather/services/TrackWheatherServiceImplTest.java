@@ -1,10 +1,21 @@
 package com.moodcompany.moodwheather.services;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
+import com.moodcompany.moodwheather.repository.TrackWheatherRepository;
+
+@ExtendWith(MockitoExtension.class)
 class TrackWheatherServiceImplTest {
+	
+	
+	@Mock
+	TrackWheatherRepository repository;
+	@InjectMocks
+	TrackWheatherService service;
 	
 
 	@Test

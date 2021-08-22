@@ -21,9 +21,9 @@ services:
         container_name: muscimoodwheatherbackend
         environment:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://muscimoodwheatherdbhost:5432/muscimoodwheatherdb
-            - prop.spotify.cliente_id=${CLIENT_ID}
-            - prop.spotify.secret_id=${SECRET_ID}
-            - prop.spotify.open_wheather_id=${OPEN_WHEATHER_ID}
+            - prop.spotify.cliente_id=${CLIENT_SPOTIFY_ID}
+            - prop.spotify.secret_id=${SECRET_SPOTIFY_ID}
+            - prop.spotify.open_wheather_id=${OPEN_WHEATHER_KEY}
         build:
             context: .
             dockerfile: ./Dockerfile.spring

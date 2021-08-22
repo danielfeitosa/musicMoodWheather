@@ -31,6 +31,13 @@ public class TrackWheather extends BaseEntity {
 	@Cascade(CascadeType.ALL)
 	private List<Track> tracks;
 
-	private Genre genre;
+	public Genre getGenre() {
+		if (temperature > 30) {
+			return Genre.PARTY;
+		} else if (temperature >= 15 && temperature <= 30) {
+			return Genre.POP;
+		}
+		return Genre.CLASSICAL;
+	}
 
 }

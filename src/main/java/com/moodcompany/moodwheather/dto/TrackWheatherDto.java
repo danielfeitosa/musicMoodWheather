@@ -7,6 +7,7 @@ import com.moodcompany.moodwheather.domain.Genre;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
@@ -14,8 +15,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class TrackWheatherDto {
-	
-	
 
 	private Long id;
 
@@ -23,7 +22,7 @@ public class TrackWheatherDto {
 	private Double temperature;
 
 	private List<TrackDto> tracks;
-
+	@Getter
 	private Genre genre;
 
 }

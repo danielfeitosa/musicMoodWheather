@@ -1,4 +1,4 @@
-package com.moodcompany.moodwheather.security;
+package com.moodcompany.moodwheather.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

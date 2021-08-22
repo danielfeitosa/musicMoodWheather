@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.moodcompany.moodwheather.client.openwheather.OpenWheatherMapClient;
 import com.moodcompany.moodwheather.client.openwheather.Wheather;
-import com.moodcompany.moodwheather.domain.Genre;
 import com.moodcompany.moodwheather.domain.TrackWheather;
 import com.moodcompany.moodwheather.repository.TrackWheatherRepository;
 
@@ -18,14 +17,11 @@ public class TrackWheatherServiceImpl implements TrackWheatherService {
 
 	private RecommendTracksService recommendTracksService;
 
-	
 	private TrackWheatherRepository repository;
+
 	@Autowired
-	public TrackWheatherServiceImpl(
-			OpenWheatherMapClient openWheatherMapClient,
-			RecommendTracksService recommendTracksService,
-			 TrackWheatherRepository repository
-			) {
+	public TrackWheatherServiceImpl(OpenWheatherMapClient openWheatherMapClient,
+			RecommendTracksService recommendTracksService, TrackWheatherRepository repository) {
 		super();
 		this.openWheatherMapClient = openWheatherMapClient;
 		this.recommendTracksService = recommendTracksService;
@@ -36,26 +32,14 @@ public class TrackWheatherServiceImpl implements TrackWheatherService {
 	@Transactional
 	public TrackWheather getTrackByCityWheather(String city) {
 		Wheather wheatherCity = openWheatherMapClient.getWheatherByCity(city);
-		Genre genre = getGenre(wheatherCity.getTempetatura());
-		
-		return repository.save(TrackWheather.builder()
+
+		TrackWheather tackWheather = TrackWheather.builder()
 				.city(city)
 				.temperature(wheatherCity.getTempetatura())
-				.genre(genre)
-				.tracks(recommendTracksService.recommendTracks(genre))
-				.build());
-	
+				.build();
 
-	}
-
-	private Genre getGenre(double temperature) {
-		if (temperature > 30) {
-			return Genre.PARTY;
-		} else if (temperature >= 15 && temperature <= 30) {
-			return Genre.POP;
-		}
-
-		return Genre.CLASSICAL;
+		tackWheather.setTracks(recommendTracksService.recommendTracks(tackWheather.getGenre()));
+		return repository.save(tackWheather);
 
 	}
 
