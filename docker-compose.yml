@@ -23,7 +23,7 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:postgresql://muscimoodwheatherdbhost:5432/muscimoodwheatherdb
             - prop.spotify.cliente_id=${CLIENT_ID}
             - prop.spotify.secret_id=${SECRET_ID}
-            - prop.spotify.redirect_uri=${REDIREC_URI}
+            - prop.spotify.open_wheather_id=${OPEN_WHEATHER_ID}
         build:
             context: .
             dockerfile: ./Dockerfile.spring

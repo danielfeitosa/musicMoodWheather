@@ -1,6 +1,5 @@
 package com.moodcompany.moodwheather.client.spotify;
 
-import java.io.IOException;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
@@ -11,12 +10,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -33,10 +29,6 @@ public class SpotifyClient {
 	@Value("${prop.spotify.secret_id}")
 	private String secret_id;
 	
-	@Value("${prop.spotify.redirect_uri}")
-	private String redirect_uri;
-	
-
 
 	private final RestTemplate restTemplate;
 
@@ -47,34 +39,24 @@ public class SpotifyClient {
 		super();
 		this.restTemplate = new RestTemplate();
 	}
+	public void authorize() {
 
-	
-
-
-	public void authorization(String code) {
-		if (spotifyToken == null) {
-			String apiTokenURL = "https://accounts.spotify.com/api/token";
-			String grantType = "authorization_code";
-			String basicAuth = client_id + ":" + secret_id;
-			HttpHeaders headers = new HttpHeaders();
-			String encoding = Base64.getEncoder().encodeToString(basicAuth.getBytes());
-			headers.setBasicAuth(encoding);
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			MultiValueMap<String, String> bodyParamMap = new LinkedMultiValueMap<>();
-			bodyParamMap.add("grant_type", grantType);
-			bodyParamMap.add("code", code);
-			bodyParamMap.add("redirect_uri", redirect_uri);
-
-			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(bodyParamMap, headers);
-			spotifyToken = restTemplate.postForEntity(apiTokenURL, entity, SpotifyToken.class).getBody();
-			
-			
-			
-		}
+		String apiTokenURL = "https://accounts.spotify.com/api/token";
+		String grantType = "client_credentials";
+		String basicAuth = client_id + ":" + secret_id;
+		HttpHeaders headers = new HttpHeaders();
+		String encoding = Base64.getEncoder().encodeToString(basicAuth.getBytes());
+		headers.setBasicAuth(encoding);
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		MultiValueMap<String, String> bodyParamMap = new LinkedMultiValueMap<>();
+		bodyParamMap.add("grant_type", grantType);
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(bodyParamMap, headers);
+		spotifyToken = restTemplate.postForEntity(apiTokenURL, entity, SpotifyToken.class).getBody();
 		
 		
-
 	}
+
+
 
 	public List<Track> getTracksForGender(Genre genre) {
 		String url = "https://api.spotify.com/v1/recommendations";
