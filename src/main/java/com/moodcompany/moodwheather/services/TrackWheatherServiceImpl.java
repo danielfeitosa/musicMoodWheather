@@ -39,7 +39,8 @@ public class TrackWheatherServiceImpl implements TrackWheatherService {
 				.build();
 
 		tackWheather.setTracks(recommendTracksService.recommendTracks(tackWheather.getGenre()));
-		return repository.save(tackWheather);
+		repository.save(tackWheather);
+		return tackWheather;
 
 	}
 

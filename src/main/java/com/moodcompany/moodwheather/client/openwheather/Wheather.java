@@ -1,7 +1,5 @@
 package com.moodcompany.moodwheather.client.openwheather;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class Wheather {
 
 	private Main main;
@@ -18,19 +16,6 @@ public class Wheather {
 		return main.getTemp();
 	}
 
-	private static class Main {
-
-		private double temp;
-
-		@JsonProperty("temp")
-		public double getTemp() {
-			return this.temp;
-		}
-
-		
-		
-		
-
-	}
+	
 
 }
