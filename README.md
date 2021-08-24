@@ -13,4 +13,5 @@
  - OPEN_WHEATHER_KEY
 
 - Depois execute do script deploy.sh
+- Quando finalizar de subir as instâncias do docker-compose digite no browser htto://localhost:1200
 
