@@ -69,7 +69,7 @@ public class SpotifyClient {
 		headers.setBearerAuth(
 				spotifyToken.getAccess_token());
 		HttpEntity<String> entity = new HttpEntity<>("", headers);
-
+		System.out.println(restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, String.class));
 		Response tracks = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, entity, Response.class)
 				.getBody();
 

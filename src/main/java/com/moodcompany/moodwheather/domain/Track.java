@@ -24,6 +24,8 @@ public class Track  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long key;
+	
+	private String id;
     @OneToMany
     @Cascade(CascadeType.ALL)
 	private List<Artist> artists;

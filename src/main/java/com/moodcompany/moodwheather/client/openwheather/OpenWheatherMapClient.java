@@ -26,10 +26,10 @@ public class OpenWheatherMapClient {
 	public Wheather getWheatherByCity(String city) {
 		
 		UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(apiHostWheather)
-		        .queryParam("q", city)
+		        .queryParam("q", city,"UTF-8")
 		        .queryParam("units", "metric")
 		        .queryParam("appid", open_wheather_id);
-		        
+		System.out.println(builder.toUriString());        
 		return restTemplate.getForObject( builder.toUriString(),Wheather.class);
 	}
 	

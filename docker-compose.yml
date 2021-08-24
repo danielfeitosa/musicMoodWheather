@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-    muscimoodwheatherdbhost:
+   muscimoodwheatherdbhost:
         image: postgres:latest
         networks:
          - network-backend
@@ -16,7 +16,7 @@ services:
              - POSTGRES_USER=user
              - POSTGRES_DB=muscimoodwheatherdb
         restart: unless-stopped
-    muscimoodwheatherbackend:
+   muscimoodwheatherbackend:
         image: springboot
         container_name: muscimoodwheatherbackend
         environment:
@@ -38,7 +38,18 @@ services:
         networks:
           - network-backend
         restart: unless-stopped
-  
+   muscimoodwheatherfrontend:
+        build:
+          context: .
+          dockerfile: ./Dockerfile.flutter
+        depends_on:
+            - muscimoodwheatherbackend
+        networks:
+          - network-backend
+        expose:
+          - 1200
+        ports:
+          - "1200:80"
 networks: 
     network-backend:
         driver: bridge

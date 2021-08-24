@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 public class TrackDto {
 
 	private String id;
+	
+	private Long key;
 
 	private List<ArtistDto> artists;
 
